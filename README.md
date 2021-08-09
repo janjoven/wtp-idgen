@@ -13,7 +13,8 @@ import (
 )
 ```
 IdGenerator Takes to argument in initializing
-
+first is the generation type (1 => RoundId,2 => TransactionId)
+return a string
 
 Sample usage
 ```go
