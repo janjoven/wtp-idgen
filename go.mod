@@ -1,3 +1,3 @@
-module github.com/janjoven/go-wtp-idgen
+module github.com/janjoven/wtp-idgen
 
 go 1.16

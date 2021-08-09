@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/janjoven/go-wtp-idgen/idgen"
+	"github.com/janjoven/wtp-idgen/idgen"
 )
 
 func main() {
