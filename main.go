@@ -8,6 +8,7 @@ import (
 
 func main() {
 	init := idgen.New(1, 2)
-	fmt.Print(init.IdGen() + "\n")
+	id, _ := init.IdGen()
+	fmt.Print(id)
 
 }
