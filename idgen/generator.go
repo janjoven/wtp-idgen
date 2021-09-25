@@ -2,38 +2,61 @@ package idgen
 
 import (
 	"fmt"
-	"math/rand"
 	"strconv"
+	"sync"
 	"time"
 )
 
 type Generator struct {
-	TransactionType int
-	ProviderId      int
+	UserID     int32
+	ProviderId int
 }
 
-func New(transactionType int, providerId int) *Generator {
+var RoundSerialNumber int64
+var TransactionSerialNumber int64
+var mx sync.Mutex
+
+func New(UserID int32, providerId int) *Generator {
 	return &Generator{
-		TransactionType: transactionType,
-		ProviderId:      providerId,
+		UserID:     UserID,
+		ProviderId: providerId,
 	}
 }
-func (gen *Generator) IdGen() (int64, error) {
-	var id string
-	timeunix := fmt.Sprint(time.Now().Unix())
-	transactionType := fmt.Sprint(gen.TransactionType)
-	providerId := fmt.Sprintf("%03d", gen.ProviderId)
-	// dateNow := time.Now()
-	// dateformated := fmt.Sprint(dateNow.Format("20060201"))
-	randLastNumber := randGenerator()
-	id = transactionType + providerId + timeunix + randLastNumber
-	i, err := strconv.ParseInt(id, 10, 64)
-	return i, err
+func (gen *Generator) IdGenRound(providerID int64, serverID int) (int64, error) {
+	mx.Lock()
+	defer mx.Unlock()
+	current_time := time.Now()
+	Identifier := "1"
+	serverNumber := fmt.Sprint(serverID)
+	userID := fmt.Sprintf("%02d", providerID)
+	time := current_time.Format("060201")
+	serialNumber := fmt.Sprintf("%09d", RoundSerialNumber)
+	format := Identifier + serverNumber + userID + time + serialNumber
+	fmt.Println(format)
+	id, err := strconv.ParseInt(format, 10, 64)
+	if err != nil {
+		return 0, err
+	}
+	fmt.Println(id)
+	RoundSerialNumber += 1
+	return id, nil
 }
-func randGenerator() string {
-	b := 99999
-	a := 1
-	rand.Seed(time.Now().UnixNano())
-	n := a + rand.Intn(b-a+1)
-	return fmt.Sprintf("%05d", n)
+func (gen *Generator) IdGenTransaction(providerID int64, serverID int) (int64, error) {
+	mx.Lock()
+	defer mx.Unlock()
+	current_time := time.Now()
+	Identifier := "2"
+	serverNumber := fmt.Sprint(serverID)
+	userID := fmt.Sprintf("%02d", providerID)
+	time := current_time.Format("060201")
+	serialNumber := fmt.Sprintf("%09d", RoundSerialNumber)
+	format := Identifier + serverNumber + userID + time + serialNumber
+	fmt.Println(format)
+	id, err := strconv.ParseInt(format, 10, 64)
+	if err != nil {
+		return 0, err
+	}
+	fmt.Println(id)
+	RoundSerialNumber += 1
+	return id, nil
 }
