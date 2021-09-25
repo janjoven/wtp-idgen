@@ -32,12 +32,10 @@ func IdGenRound(providerID int64, serverID int) (int64, error) {
 	time := current_time.Format("060201")
 	serialNumber := fmt.Sprintf("%09d", RoundSerialNumber)
 	format := Identifier + serverNumber + userID + time + serialNumber
-	fmt.Println(format)
 	id, err := strconv.ParseInt(format, 10, 64)
 	if err != nil {
 		return 0, err
 	}
-	fmt.Println(id)
 	RoundSerialNumber += 1
 	return id, nil
 }
@@ -51,12 +49,10 @@ func IdGenTransaction(providerID int64, serverID int) (int64, error) {
 	time := current_time.Format("060201")
 	serialNumber := fmt.Sprintf("%09d", RoundSerialNumber)
 	format := Identifier + serverNumber + userID + time + serialNumber
-	fmt.Println(format)
 	id, err := strconv.ParseInt(format, 10, 64)
 	if err != nil {
 		return 0, err
 	}
-	fmt.Println(id)
 	RoundSerialNumber += 1
 	return id, nil
 }
