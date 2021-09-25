@@ -16,13 +16,13 @@ var RoundSerialNumber int64
 var TransactionSerialNumber int64
 var mx sync.Mutex
 
-func New(UserID int32, providerId int) *Generator {
-	return &Generator{
-		UserID:     UserID,
-		ProviderId: providerId,
-	}
-}
-func (gen *Generator) IdGenRound(providerID int64, serverID int) (int64, error) {
+// func New(UserID int32, providerId int) *Generator {
+// 	return &Generator{
+// 		UserID:     UserID,
+// 		ProviderId: providerId,
+// 	}
+// }
+func IdGenRound(providerID int64, serverID int) (int64, error) {
 	mx.Lock()
 	defer mx.Unlock()
 	current_time := time.Now()
@@ -41,7 +41,7 @@ func (gen *Generator) IdGenRound(providerID int64, serverID int) (int64, error) 
 	RoundSerialNumber += 1
 	return id, nil
 }
-func (gen *Generator) IdGenTransaction(providerID int64, serverID int) (int64, error) {
+func IdGenTransaction(providerID int64, serverID int) (int64, error) {
 	mx.Lock()
 	defer mx.Unlock()
 	current_time := time.Now()

@@ -13,10 +13,9 @@ var prevNumber int64
 var mu sync.Mutex
 
 func main() {
-	init := idgen.New(1000000, 2)
 	for {
 		mu.Lock()
-		RoundID, err := init.IdGenTransaction(42, 1)
+		RoundID, err := idgen.IdGenTransaction(42, 1)
 		if err != nil {
 			log.Printf("%v", err)
 		}
